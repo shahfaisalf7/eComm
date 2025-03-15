@@ -1,0 +1,1 @@
+import{V as e}from"./vue-ROl3rvO--v4.5.5.js";import{V as r}from"./vue-toast-notification-CWUcDhO--v4.5.5.js";e.use(r);function i(o,t={}){e.$toast.open({message:o,type:t.type||"default",duration:5e3,dismissible:!0,position:"bottom-right",pauseOnHover:!0,...t})}export{i as t};

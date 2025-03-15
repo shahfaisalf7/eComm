@@ -1,0 +1,54 @@
+@import "../../../utils/common/_steps";
+@import "../../../utils/common/_order-summary";
+@import "layouts/_checkout-left";
+@import "layouts/_checkout-right";
+
+.checkout-wrap {
+    margin-top: 50px;
+}
+
+.checkout-form {
+    display: flex;
+    position: relative;
+    width: 1300px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: flex-start;
+
+    .checkout-inner {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .order-summary {
+        .cart-items {
+            margin: 0 0 17px;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                width: 3px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .checkout-form {
+        .checkout-inner {
+            flex-direction: column;
+        }
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .checkout-wrap {
+        margin-top: 30px;
+    }
+
+    .checkout-form {
+        flex-direction: column;
+        align-items: unset;
+    }
+}

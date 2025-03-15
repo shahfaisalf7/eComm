@@ -1,0 +1,35 @@
+{
+    "name": "fleetcart",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "modules/*"
+    ],
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "devbuild": "vite build --mode development"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue2": "^2.3.1",
+        "autoprefixer": "^10.4.20",
+        "glob": "^11.0.0",
+        "laravel-vite-plugin": "^1.0.5",
+        "path": "^0.12.7",
+        "postcss": "^8.4.45",
+        "postcss-rtlcss": "^5.4.0",
+        "rollup-plugin-copy": "https://github.com/envaysoft-github/rollup-plugin-copy",
+        "sass": "1.77.6",
+        "vite": "^5.4.4"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "alpinejs": "^3.14.1",
+        "animate.css": "^4.1.1",
+        "axios": "^1.7.7",
+        "bootstrap": "^5.3.3",
+        "jquery": "^3.7.1",
+        "lodash": "^4.17.21",
+        "vue": "2.7.16"
+    }
+}

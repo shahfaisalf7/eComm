@@ -1,0 +1,1 @@
+$("#refresh-rates").on("click",r=>{$.ajax({type:"GET",url:route("admin.currency_rates.refresh"),success(){DataTable.reload(),window.admin.stopButtonLoading($(r.currentTarget))},error(e){error(e.responseJSON.message),window.admin.stopButtonLoading($(r.currentTarget))}})});

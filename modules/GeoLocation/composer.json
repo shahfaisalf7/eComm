@@ -1,0 +1,31 @@
+{
+    "name": "fleetcart/geolocation",
+    "description": "",
+    "authors": [
+        {
+            "name": "Envay Soft",
+            "email": "envaysoft@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\GeoLocation\\": "",
+            "Modules\\GeoLocation\\App\\": "app/",
+            "Modules\\GeoLocation\\Database\\Factories\\": "database/factories/",
+            "Modules\\GeoLocation\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\GeoLocation\\Tests\\": "tests/"
+        }
+    }
+}

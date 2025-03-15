@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'billing' => [
+        'full_name' => 'Name',
+        'phone_number' => 'Phone Number',
+        'first_name' => 'First Name',
+        'last_name' => 'Last Name',
+        'address_1' => 'Address Line 1',
+        'address_2' => 'Address Line 2 (optional)',
+        'city' => 'City',
+        'zip' => 'Postcode / ZIP',
+        'country' => 'Country',
+        'state' => 'Division',
+        'zone' => 'Area',
+    ],
+    'shipping' => [
+        'full_name' => 'Name',
+        'phone_number' => 'Phone Number',
+        'first_name' => 'First Name',
+        'last_name' => 'Last Name',
+        'address_1' => 'Address Line 1',
+        'address_2' => 'Address Line 2 (optional)',
+        'city' => 'City',
+        'zip' => 'Postcode / ZIP',
+        'country' => 'Country',
+        'state' => 'Division',
+        'zone' => 'Area',
+    ],
+    'street_address' => 'Address',
+    'customer_email' => 'Email',
+    'customer_phone' => 'Phone',
+    'create_an_account' => 'Create an account?',
+    'password' => 'Password',
+    'ship_to_a_different_address' => 'Ship to a different address',
+    'order_note' => 'Order Note',
+];

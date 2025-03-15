@@ -1,0 +1,17 @@
+{
+    "name": "admin-module",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "chart.js": "^4.4.4",
+        "datatables.net-bs": "^2.1.6",
+        "flatpickr": "^4.6.13",
+        "font-awesome": "^4.7.0",
+        "mousetrap": "^1.6.5",
+        "nprogress": "^0.2.0",
+        "selectize": "^0.12.6",
+        "sortablejs": "^1.15.3",
+        "tinymce": "5.10.7",
+        "vue-toast-notification": "0.6.3"
+    }
+}

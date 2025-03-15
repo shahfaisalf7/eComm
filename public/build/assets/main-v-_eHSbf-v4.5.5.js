@@ -1,0 +1,1 @@
+$("#order-status").on("change",r=>{$.ajax({type:"PUT",url:route("admin.orders.status.update",r.currentTarget.dataset.id),data:{status:r.currentTarget.value},success:e=>{success(e)},error:e=>{error(e.responseJSON.message)}})});

@@ -1,0 +1,29 @@
+.order-summary-middle {
+    padding: 25px 0 22px;
+
+    &.loading {
+        &::before {
+            content: "";
+            width: unset;
+            height: unset;
+            left: -15px;
+            top: 15px;
+            right: -15px;
+            bottom: 15px;
+            border-radius: var(--radius-default);
+        }
+    }
+
+    .btn-remove-coupon {
+        font-size: 14px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        transition: var(--transition-150);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--color-primary);
+        }
+    }
+}

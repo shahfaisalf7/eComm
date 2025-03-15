@@ -1,0 +1,14 @@
+{
+    "name": "Floramom",
+    "alias": "floramom",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Floramom\\Providers\\FloramomServiceProvider"
+    ],
+    "files": [],
+    "paths": {
+        "assets": "Assets"
+    }
+}

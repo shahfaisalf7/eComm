@@ -1,0 +1,31 @@
+{
+    "name": "fleetcart/floramom",
+    "description": "",
+    "authors": [
+        {
+            "name": "Envay Soft",
+            "email": "envaysoft@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Floramom\\": "",
+            "Modules\\Floramom\\App\\": "app/",
+            "Modules\\Floramom\\Database\\Factories\\": "database/factories/",
+            "Modules\\Floramom\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Floramom\\Tests\\": "tests/"
+        }
+    }
+}
