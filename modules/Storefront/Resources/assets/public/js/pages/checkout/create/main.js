@@ -44,6 +44,7 @@ Alpine.data(
         applyingCoupon: false,
         couponCode: null,
         couponError: null,
+        couponSuccess: null,
         placingOrder: false,
         stripe: null,
         stripeElements: null,
@@ -517,13 +518,26 @@ Alpine.data(
             axios
                 .post(route("cart.coupon.store"), { coupon: this.couponCode })
                 .then((response) => {
+                    const cart = response.data;
+                    const hasSpecial = Object.values(cart.items).some(item =>
+                        item.product.special_price &&
+                        Number(item.product.special_price.amount) < Number(item.product.price.amount)
+                    );
+                    const hasNonSpecial = Object.values(cart.items).some(item =>
+                        !item.product.special_price ||
+                        Number(item.product.special_price.amount) >= Number(item.product.price.amount)
+                    );
+
                     this.couponCode = null;
                     this.couponError = null;
-
-                    this.$store.state.updateCart(response.data);
+                    this.couponSuccess = (hasSpecial && hasNonSpecial)
+                        ? 'Added Successfully, applied only to non-offer price products'
+                        : 'Added Successfully';
+                    this.$store.state.updateCart(cart);
                 })
                 .catch((error) => {
                     this.couponError = error.response.data.message;
+                    this.couponSuccess = null;
                 })
                 .finally(() => {
                     this.loadingOrderSummary = false;

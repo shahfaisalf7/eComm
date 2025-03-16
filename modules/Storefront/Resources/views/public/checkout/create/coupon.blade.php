@@ -8,7 +8,6 @@
             @input="couponError = null"
             x-model="couponCode"
         >
-
         <button
             type="button"
             class="btn btn-default btn-apply-coupon"
@@ -17,8 +16,17 @@
             {{ trans('storefront::checkout.apply') }}
         </button>
     </div>
-
     <template x-if="couponError">
         <span class="error-message" x-text="couponError"></span>
     </template>
+    <template x-if="couponSuccess">
+        <span class="success-message" x-text="couponSuccess"></span>
+    </template>
 </div>
+<style>
+    .success-message {
+        color: green;
+        display: block;
+        margin-top: 5px;
+    }
+</style>
