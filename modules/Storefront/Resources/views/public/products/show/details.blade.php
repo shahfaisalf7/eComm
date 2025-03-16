@@ -169,4 +169,9 @@
                     @endforeach
                 </li>
 @endif
+        </ul>
+
+        @include('storefront::public.products.show.social_share')
+    </div>
+</div>
 
