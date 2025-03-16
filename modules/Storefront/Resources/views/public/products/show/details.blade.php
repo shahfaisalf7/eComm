@@ -159,14 +159,14 @@
                 <li>
                     <label>{{ trans('storefront::product.tags') }}</label>
 
-                    @foreach ($product->tags as $tag)
-                        {{-- <a href="{{ $tag->url() }}">{{ $tag->name }}</a> --}}
-                        <span> {{ $tag->name }}</span>
+                    @foreach ($product->tags as $index => $tag)
+                        <span style="color: #e33f82;">
+                {{ $tag->name }}
+            </span>
+                        @if ($index < $product->tags->count() - 1)
+                            ,
+                        @endif
                     @endforeach
                 </li>
-            @endif
-        </ul>
+@endif
 
-        @include('storefront::public.products.show.social_share')
-    </div>
-</div>
