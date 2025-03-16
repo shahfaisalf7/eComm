@@ -48,8 +48,19 @@ class CartCouponController
                 });
 
             return Cart::instance();
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
+        } catch (\Throwable $e) { // Catch all errors and exceptions
+            \Log::error('Coupon application failed: ' . $e->getMessage(), [
+                'exception' => $e,
+                'coupon' => $request->input('coupon'),
+                'cart' => Cart::instance()->toArray(),
+            ]);
+
+            // Force translation or fallback
+            $message = trans($e->getMessage()) === $e->getMessage()
+                ? 'Coupon cannot be applied to offer price products'
+                : trans($e->getMessage());
+
+            return response()->json(['message' => $message], 422);
         }
     }
 
