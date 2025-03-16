@@ -149,8 +149,9 @@
                 <li>
                     <label>{{ trans('storefront::product.categories') }}</label>
 
-                    @foreach ($product->categories as $category)
-                        <a href="{{ $category->url() }}">{{ $category->name }}</a>
+                    @foreach ($product->categories as $index => $category)
+                        <span style="color: #e33f82;">
+                <a href="{{ $category->url() }}" style="color: #e33f82;">{{ $category->name }}</a>@if ($index < $product->categories->count() - 1), </span>@endif
                     @endforeach
                 </li>
             @endif
@@ -160,15 +161,11 @@
                     <label>{{ trans('storefront::product.tags') }}</label>
 
                     @foreach ($product->tags as $index => $tag)
-                        <span style="color: #e33f82;">
-                {{ $tag->name }}
-            </span>
-                        @if ($index < $product->tags->count() - 1)
-                            <span style="color: #e33f82;">,</span>
-                        @endif
+                        <span style="color: #e33f82;">{{ $tag->name }}@if ($index < $product->tags->count() - 1), </span>@endif
                     @endforeach
                 </li>
-@endif
+            @endif
+
         </ul>
 
         @include('storefront::public.products.show.social_share')
