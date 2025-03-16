@@ -164,7 +164,7 @@
                 {{ $tag->name }}
             </span>
                         @if ($index < $product->tags->count() - 1)
-                            ,
+                            <p style="color: #e33f82;">,</p>
                         @endif
                     @endforeach
                 </li>
