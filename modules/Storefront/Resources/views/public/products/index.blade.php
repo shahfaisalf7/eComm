@@ -134,7 +134,7 @@
     }
 
     .description-expanded {
-        max-height: 1000px; /* Large enough to fit most content; adjust if needed */
+        max-height: auto; /* Large enough to fit most content; adjust if needed */
     }
 
     .show-more-btn,
