@@ -4,7 +4,7 @@ return [
     'id' => 'ID',
     'name' => 'Name',
     'slug' => 'URL',
-    'description'=>'Description',
+    'description'=> 'Description',
     'is_searchable' => 'Searchable',
     'is_active' => 'Status',
 ];
