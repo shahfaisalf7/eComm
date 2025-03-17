@@ -4,7 +4,7 @@
         <base href="{{ config('app.url') }}">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-
+        <link rel="canonical" href="{{ isset($canonical) ? $canonical : url()->current() }}" />
         <title>
             @if(request()->path() === '/')
                 {{ setting('store_name') }}
@@ -20,6 +20,7 @@
             @endif
 
         </title>
+
 
 
 
