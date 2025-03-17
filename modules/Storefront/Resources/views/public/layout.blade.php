@@ -88,6 +88,10 @@
         class="page-template {{ is_rtl() ? 'rtl' : 'ltr' }}"
         data-theme-color="{{ $themeColor->toHexString() }}"
     >
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJV4G7ND"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
         <div x-data="App" class="wrapper">
             @include('storefront::public.layouts.top_nav')
             @include('storefront::public.layouts.header')

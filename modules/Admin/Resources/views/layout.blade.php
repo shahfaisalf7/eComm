@@ -31,6 +31,7 @@
     </head>
 
     <body class="skin-blue sidebar-mini offcanvas clearfix {{ is_rtl() ? 'rtl' : 'ltr' }}" dir>
+
         <div class="left-side"></div>
 
         @include('admin::partials.sidebar')

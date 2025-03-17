@@ -22,6 +22,10 @@
                         min-width: 320px;
                         margin: 0;"
     >
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJV4G7ND"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
         <table style="border-collapse: collapse; width: 100%;">
             <tbody>
                 <tr>
