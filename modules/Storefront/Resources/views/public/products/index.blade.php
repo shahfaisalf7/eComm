@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 @extends('storefront::public.layout')
 
 @section('title')
@@ -62,11 +66,23 @@
                     @endif
 
                     @include('storefront::public.products.index.search_result')
-                        @if ($category->description)
-                            <div class="category-description" style="margin-top: 50px; margin-bottom: 50px; text-align: justify;">
+
+                    @if ($category->description)
+                        @php
+                            // Count words in the description (strip HTML to avoid counting tags)
+                            $descriptionWordCount = str_word_count(strip_tags($category->description));
+                            $showToggle = $descriptionWordCount > 100;
+                        @endphp
+                        <div class="category-description" style="margin-top: 50px; margin-bottom: 50px; text-align: justify;">
+                            <div class="description-content {{ $showToggle ? 'description-collapsed' : '' }}">
                                 {!! $category->description !!}
                             </div>
-                        @endif
+                            @if ($showToggle)
+                                <button class="show-more-btn btn btn-primary" onclick="toggleDescription(this)">Show More</button>
+                                <button class="show-less-btn btn btn-primary" style="display: none;" onclick="toggleDescription(this)">Show Less</button>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -76,6 +92,25 @@
 @push('globals')
     <script>
         FleetCart.langs['storefront::products.showing_results'] = '{{ trans("storefront::products.showing_results") }}';
+
+        function toggleDescription(button) {
+            const container = button.closest('.category-description');
+            const content = container.querySelector('.description-content');
+            const showMoreBtn = container.querySelector('.show-more-btn');
+            const showLessBtn = container.querySelector('.show-less-btn');
+
+            if (content.classList.contains('description-collapsed')) {
+                content.classList.remove('description-collapsed');
+                content.classList.add('description-expanded');
+                showMoreBtn.style.display = 'none';
+                showLessBtn.style.display = 'inline-block';
+            } else {
+                content.classList.remove('description-expanded');
+                content.classList.add('description-collapsed');
+                showMoreBtn.style.display = 'inline-block';
+                showLessBtn.style.display = 'none';
+            }
+        }
     </script>
 
     @vite([
@@ -83,3 +118,39 @@
         'modules/Storefront/Resources/assets/public/js/pages/products/index/main.js',
     ])
 @endpush
+
+<style>
+    .category-description {
+        position: relative;
+    }
+
+    .description-content {
+        transition: max-height 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition with cubic-bezier */
+        overflow: hidden;
+    }
+
+    .description-collapsed {
+        max-height: 200px; /* Adjust this value to control the initial visible height */
+    }
+
+    .description-expanded {
+        max-height: 1000px; /* Large enough to fit most content; adjust if needed */
+    }
+
+    .show-more-btn,
+    .show-less-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .show-more-btn:hover,
+    .show-less-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
