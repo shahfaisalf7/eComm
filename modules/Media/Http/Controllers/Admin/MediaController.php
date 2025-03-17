@@ -12,116 +12,46 @@ class MediaController
 {
     use HasCrudActions;
 
-    /**
-     * Model for the resource.
-     *
-     * @var string
-     */
     protected $model = File::class;
-
-    /**
-     * Label of the resource.
-     *
-     * @var string
-     */
     protected $label = 'media::media.media';
-
-    /**
-     * View path of the resource.
-     *
-     * @var string
-     */
     protected $viewPath = 'media::admin.media';
-
-
-    /**
-     * Store a newly created media in storage.
-     *
-     * @param UploadMediaRequest $request
-     *
-     * @return Response
-     */
-    // PREVIOUS FUNCTION
-//    public function store(UploadMediaRequest $request)
-//    {
-//        $file = $request->file('file');
-//        $path = Storage::putFile('media', $file);
-//
-//        return File::create([
-//            'user_id' => auth()->id(),
-//            'disk' => config('filesystems.default'),
-//            'filename' => substr($file->getClientOriginalName(), 0, 255),
-//            'path' => $path,
-//            'extension' => $file->guessClientExtension() ?? '',
-//            'mime' => $file->getClientMimeType(),
-//            'size' => $file->getSize(),
-//        ]);
-//    }
-
-// WORKING NEW FUNCTION
-//    public function store(UploadMediaRequest $request)
-//    {
-//        $file = $request->file('file');
-//        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME); // e.g., "membership-facilities"
-//        $extension = $file->guessClientExtension() ?? $file->getClientOriginalExtension(); // e.g., "jpg"
-//        $uniqueName = $originalName . '-' . time() . '.' . $extension; // e.g., "membership-facilities-1677654321.jpg"
-//        $path = Storage::putFileAs('media', $file, $uniqueName, 'public');
-//
-//        return File::create([
-//            'user_id' => auth()->id(),
-//            'disk' => config('filesystems.default'),
-//            'filename' => substr($file->getClientOriginalName(), 0, 255),
-//            'path' => $path,
-//            'extension' => $extension,
-//            'mime' => $file->getClientMimeType(),
-//            'size' => $file->getSize(),
-//        ]);
-//    }
-
-
-
 
     public function store(UploadMediaRequest $request)
     {
         $file = $request->file('file');
-        $originalName = $file->getClientOriginalName(); // e.g., "ddcLogo.jpg"
-        $baseName = pathinfo($originalName, PATHINFO_FILENAME); // e.g., "ddcLogo"
+        $originalName = $file->getClientOriginalName(); // e.g., "My Image!.jpg"
+        $baseName = pathinfo($originalName, PATHINFO_FILENAME); // e.g., "My Image!"
         $extension = $file->guessClientExtension() ?? $file->getClientOriginalExtension(); // e.g., "jpg"
-        $filename = $originalName;
-        $disk = config('filesystems.default'); // e.g., "public_storage"
+
+        // Clean the base name
+        $cleanBaseName = preg_replace('/[^a-z0-9-]/', '', str_replace(' ', '-', strtolower($baseName))); // e.g., "my-image"
+        $filename = "{$cleanBaseName}.{$extension}"; // e.g., "my-image.jpg"
+        $disk = config('filesystems.default');
         $path = "media/{$filename}";
 
-        // Check for duplicates and append a number if needed
+        // Check for duplicates
         $counter = 1;
         while (Storage::disk($disk)->exists($path)) {
-            $filename = "{$baseName}-{$counter}.{$extension}"; // e.g., "ddcLogo-1.jpg"
+            $filename = "{$cleanBaseName}-{$counter}.{$extension}"; // e.g., "my-image-1.jpg"
             $path = "media/{$filename}";
             $counter++;
         }
 
-        // Save the file using the default disk
+        // Save to storage with cleaned name
         Storage::disk($disk)->putFileAs('media', $file, $filename);
 
-        // Create database entry
+        // Database entry with cleaned name everywhere
         return File::create([
             'user_id' => auth()->id(),
             'disk' => $disk,
-            'filename' => substr($originalName, 0, 255),
-            'path' => $path,
+            'filename' => $filename, // Cleaned: "my-image.jpg" or "my-image-1.jpg"
+            'path' => $path,        // Cleaned: "media/my-image.jpg" or "media/my-image-1.jpg"
             'extension' => $extension,
             'mime' => $file->getClientMimeType(),
             'size' => $file->getSize(),
         ]);
     }
 
-
-    /**
-     * Remove the specified resources from storage.
-     *
-     * @param string $ids
-     *
-     * @return Response
-     */
     public function destroy(string $ids)
     {
         File::find(explode(',', $ids))->each->delete();
