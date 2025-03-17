@@ -41,7 +41,7 @@
                                             {{ Form::text('id', trans('category::attributes.id'), $errors, null, ['disabled' => true]) }}
                                         </div>
                                         {{ Form::text('name', trans('category::attributes.name'), $errors, null, ['required' => true]) }}
-                                        {{ Form::textarea('description', trans('category::attributes.description'), $errors, null, ['id' => 'description', 'rows' => 6, 'class' => 'wysiwyg']) }}
+                                        {{ Form::textarea('description', 'Description', $errors, null, ['id' => 'description', 'rows' => 6, 'class' => 'wysiwyg']) }}
                                         {{ Form::checkbox('is_searchable', trans('category::attributes.is_searchable'), trans('category::categories.form.show_this_category_in_search_box'), $errors) }}
                                         {{ Form::checkbox('is_active', trans('category::attributes.is_active'), trans('category::categories.form.enable_the_category'), $errors) }}
                                     </div>
