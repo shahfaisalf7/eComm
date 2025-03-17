@@ -20,7 +20,7 @@ class Category extends Model implements Sitemapable
     use Translatable, Sluggable, HasMedia, NestableTrait, HasMetaData;
 
     protected $with = ['translations'];
-    protected $fillable = ['parent_id', 'slug', 'position', 'is_searchable', 'is_active'];
+    protected $fillable = ['parent_id', 'slug', 'position', 'is_searchable', 'is_active','description'];
     protected $hidden = ['translations'];
     protected $casts = [
         'is_searchable' => 'boolean',

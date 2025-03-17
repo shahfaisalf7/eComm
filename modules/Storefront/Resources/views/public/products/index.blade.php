@@ -62,6 +62,11 @@
                     @endif
 
                     @include('storefront::public.products.index.search_result')
+                        @if ($category->description)
+                            <div class="category-description" style="margin-top: 50px; margin-bottom: 50px; text-align: justify;">
+                                {!! $category->description !!}
+                            </div>
+                        @endif
                 </div>
             </div>
         </div>

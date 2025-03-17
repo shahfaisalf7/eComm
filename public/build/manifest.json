@@ -394,10 +394,15 @@
     "isEntry": true
   },
   "modules/Category/Resources/assets/admin/js/main.js": {
-    "file": "assets/main-DcF8CvF5-v4.5.5.js",
+    "file": "assets/main-CNBJPwG1-v4.5.5.js",
     "name": "main",
     "src": "modules/Category/Resources/assets/admin/js/main.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_wysiwyg-Dm-B9rls-v4.5.5.js",
+      "_tinymce-BzaFK0Gs-v4.5.5.js",
+      "_@popperjs-DMMwm23M-v4.5.5.js"
+    ]
   },
   "modules/Category/Resources/assets/admin/sass/main.scss": {
     "file": "assets/main-C4hFQake-v4.5.5.css",

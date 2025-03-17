@@ -1,3 +1,4 @@
+import tinyMCE from "@admin/js/wysiwyg"; // Match ProductMixin.js
 import CategoryTree from './CategoryTree';
 
 export default class {
@@ -11,6 +12,17 @@ export default class {
         this.addSubCategory();
         $('#category-form').on('submit', this.submit);
         window.admin.removeSubmitButtonOffsetOn('#image', '.category-details-tab li > a');
+        this.initTinyMCE();
+    }
+
+    initTinyMCE() {
+        this.textEditor = tinyMCE({
+            setup: (editor) => {
+                editor.on('change', () => {
+                    editor.save(); // Sync content to textarea
+                });
+            }
+        });
     }
 
     fetchCategory(id) {
@@ -50,6 +62,12 @@ export default class {
         $('#slug').val(category.slug);
         $('input[name="meta[meta_title]"]').val(category.meta_data?.[0]?.meta_title || '');
         $('textarea[name="meta[meta_description]"]').val(category.meta_data?.[0]?.meta_description || '');
+        $('#description').val(category.description || '');
+
+        // Update TinyMCE content if initialized
+        if (this.textEditor && this.textEditor.get('description')) {
+            this.textEditor.get('description').setContent(category.description || '');
+        }
 
         $('#is_searchable').prop('checked', category.is_searchable);
         $('#is_active').prop('checked', category.is_active);
@@ -61,6 +79,7 @@ export default class {
 
         console.log('After Set - Meta Title:', $('input[name="meta[meta_title]"]').val());
         console.log('After Set - Meta Desc:', $('textarea[name="meta[meta_description]"]').val());
+        console.log('After Set - Description:', $('#description').val());
     }
 
     categoryImage(fieldName, file) {
@@ -86,6 +105,10 @@ export default class {
         $('#slug').val('');
         $('input[name="meta[meta_title]"]').val('');
         $('textarea[name="meta[meta_description]"]').val('');
+        $('#description').val('');
+        if (this.textEditor && this.textEditor.get('description')) {
+            this.textEditor.get('description').setContent('');
+        }
         $('#is_searchable').prop('checked', false);
         $('#is_active').prop('checked', false);
         $('.logo .image-holder-wrapper').html(this.imagePlaceholder());
