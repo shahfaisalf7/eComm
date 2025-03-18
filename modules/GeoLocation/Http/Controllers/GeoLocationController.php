@@ -262,10 +262,11 @@ class GeoLocationController extends BaseController
         // $request->validate([
         //     'city_id' => 'required',
         // ]);
-        // $city_id = $request->city_id;
-        $city_id = 1;
+         $city_id = $request->city_id;
+//         return $city_id;
+//        $city_id = 1;
         $zones = Zone::where('city_id', $city_id)->get()->toArray();
-        dd($zones);
+        //dd($zones);
         return responseWithData(__("geolocation::messages.zones_data_list"), ['data' => $zones]);
     }
 }
