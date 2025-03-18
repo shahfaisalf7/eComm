@@ -35,7 +35,7 @@ trait ProductSearch
             $productIds = (clone $query)->select('products.id')->resetOrders()->pluck('id');
         }
 
-        $products = $query->paginate(request('perPage', 30));
+        $products = $query->paginate(request('perPage', 50));
 
         event(new ShowingProductList($products));
 

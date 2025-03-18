@@ -111,7 +111,7 @@
                     <div
                         x-data="{
                             open: false,
-                            selected: {{ request('perPage', 30) }}
+                            selected: {{ request('perPage', 50) }}
                         }"
                         class="dropdown custom-dropdown"
                         @click.away="open = false"

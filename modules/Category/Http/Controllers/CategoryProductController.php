@@ -15,7 +15,6 @@ class CategoryProductController
     public function index(Category $category, Product $model, ProductFilter $productFilter)
     {
         request()->merge(['category' => $category->slug]);
-
         if (request()->expectsJson()) {
             return $this->searchProducts($model, $productFilter);
         }

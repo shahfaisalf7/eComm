@@ -37,7 +37,7 @@
             maxPrice: {{ $maxPrice ?? 1000 }},
             initialSort: '{{ request('sort', 'latest') }}',
             initialPage: {{ request('page', 1) }},
-            initialPerPage: {{ request('perPage', 20) }},
+            initialPerPage: {{ request('perPage', 50) }},
             initialViewMode: '{{ request('viewMode', 'grid') }}'
         })"
         class="product-search-wrap"
