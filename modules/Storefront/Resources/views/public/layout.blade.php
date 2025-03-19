@@ -13,21 +13,25 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
         <link rel="canonical" href="{{ isset($canonical) ? $canonical : url()->current() }}" />
-        <title>
-            @if(request()->path() === '/')
-                {{ setting('store_name') }}
-                @hasSection('title')
-                    - @yield('title')
-                @endif
-            @else
-                @hasSection('title')
-                    @yield('title') - {{ setting('store_name') }}
-                @else
-                    {{ setting('store_name') }}
-                @endif
-            @endif
+{{--        <title>--}}
+{{--            @if(request()->path() === '/')--}}
+{{--                {{ setting('store_name') }} @hasSection('title')- @yield('title')--}}
+{{--                @endif--}}
+{{--            @else--}}
+{{--                @hasSection('title') @yield('title')- {{ setting('store_name') }}--}}
+{{--                @else--}}
+{{--                    {{ setting('store_name') }}--}}
+{{--                @endif--}}
+{{--            @endif--}}
 
+{{--        </title>--}}
+        <title>@if(request()->path() === '/') {{ setting('store_name') }}@hasSection('title') - @yield('title')@endif
+            @else @hasSection('title') @yield('title') - @endif{{ setting('store_name') }}
+            @endif
         </title>
+
+
+
 
 
 

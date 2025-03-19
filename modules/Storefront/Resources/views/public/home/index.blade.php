@@ -1,5 +1,4 @@
 @extends('storefront::public.layout')
-
 @section('title', setting('store_tagline'))
 @push('meta')
     <meta name="description" content="Buy a wide range of premium skin care, baby care, hair care, and beauty care products in Bangladesh. Shop original Japanese, Korean, USA & UK skin care products at Flora Mom.">
