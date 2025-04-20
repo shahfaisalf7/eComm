@@ -8,7 +8,7 @@
             </button>
             <div class="modal-body p-5">
                 <div class="text-center d-flex justify-content-center">
-                    <img src="{{ asset('Floramom/images/login_icon.png') }}" alt="avatar"
+                    <img src="{{ asset('Floramom/images/login_icon.webp') }}" alt="avatar"
                         class="rounded-circle position-absolute top-0 start-50 translate-middle"
                         style="height: 120px !important" />
                 </div>
@@ -89,10 +89,10 @@
                                             class="btn btn-primary w-100">{{ __('Sign In') }}</button>
                                     </div>
                                     <span>{{ __("Don't have an account?") }}
-                                        <a type="button" title="Sign Up" class="pr-color" data-bs-toggle="modal"
+                                        <p type="button" title="Sign Up" class="pr-color" data-bs-toggle="modal"
                                             data-bs-target="#static_register_modal">
                                             Sign Up</i>
-                                        </a>
+                                        </p>
                                     </span>
                                 </div>
                             </form>
@@ -141,10 +141,10 @@
                                             id="sign-in-submit-btn" data-loading="">{{ __('Sign In') }}</button>
                                     </div>
                                     <span>{{ __("Don't have an account?") }}
-                                        <a type="button" title="Sign Up" class="pr-color" data-bs-toggle="modal"
+                                        <p type="button" title="Sign Up" class="pr-color" data-bs-toggle="modal"
                                             data-bs-target="#static_register_modal">
                                             Sign Up</i>
-                                        </a>
+                                        </p>
                                     </span>
                                 </div>
                             </form>

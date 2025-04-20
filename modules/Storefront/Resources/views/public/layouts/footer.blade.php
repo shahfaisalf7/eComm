@@ -160,8 +160,8 @@
                             <p class="title"><strong>{{ trans('storefront::layouts.happily_accept') }}</strong> </p>
                             <ul class="list-inline">
                                 <li>
-                                    <img class="" style="width: 80px;" src="{{ asset('build/assets/cod.png') }}"
-                                        alt="COD">
+                                    <img class="" style="width: 80px;" src="{{ asset('build/assets/cod.webp') }}"
+                                         alt="COD">
                                 </li>
                             </ul>
                         </div>
@@ -172,7 +172,7 @@
                             <ul class="list-inline">
                                 <li>
                                     <img class="" style="width: 220px;"
-                                        src="{{ asset('build/assets/gplayastore.png') }}" alt="gPlay and aStore">
+                                         src="{{ asset('build/assets/gplayastore.webp') }}" alt="gPlay and aStore">
                                 </li>
                             </ul>
                             {{-- <p class="title mt-2">{{ trans('storefront::layouts.member_of') }}</p>
@@ -220,10 +220,10 @@
                                         @foreach (social_links() as $icon => $socialLink)
                                             <li>
                                                 <a href="{{ $socialLink }}" title="{{ social_link_name($icon) }}"
-                                                    target="_blank">
+                                                   target="_blank">
                                                     @if ($icon === 'lab la-twitter')
                                                         <svg class="twitter-icon" xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 30 30" width="30px" height="30px">
+                                                             viewBox="0 0 30 30" width="30px" height="30px">
                                                             <path
                                                                 d="M26.37,26l-8.795-12.822l0.015,0.012L25.52,4h-2.65l-6.46,7.48L11.28,4H4.33l8.211,11.971L12.54,15.97L3.88,26h2.65 l7.182-8.322L19.42,26H26.37z M10.23,6l12.34,18h-2.1L8.12,6H10.23z" />
                                                         </svg>
@@ -244,7 +244,7 @@
                             <div class="col-md-9 col-sm-18">
                                 <div class="footer-payment">
                                     <img src="{{ $acceptedPaymentMethodsImage->path }}" alt="Accepted payment methods"
-                                        loading="lazy">
+                                         loading="lazy">
                                 </div>
                             </div>
                         @endif
@@ -277,7 +277,19 @@
     </div>
 
     @include('storefront::public.layouts.chat')
+    <style>
+        @media (max-width: 767px) {
+            .social-links {
+                display: flex;
+                justify-content: center;
+                padding: 0;
+            }
 
+            .social-links li {
+                margin: 0 10px; /* Optional: Adjust spacing */
+            }
+        }
+    </style>
 </footer>
 
 @push('scripts')

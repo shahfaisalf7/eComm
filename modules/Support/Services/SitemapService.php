@@ -60,7 +60,7 @@ class SitemapService
 
         Product::chunk('10000', function ($products) use (&$counter) {
             $outputDir = public_path('sitemaps');
-            $sitemapName = 'sitemap_products_' . $counter++ . '.xml';
+            $sitemapName = 'sitemap-products-' . $counter++ . '.xml';
 
             Sitemap::create()
                 ->add($products)
@@ -77,7 +77,7 @@ class SitemapService
 
         Category::chunk('1000', function ($categories) use (&$counter) {
             $outputDir = public_path('sitemaps');
-            $sitemapName = 'sitemap_categories_' . $counter++ . '.xml';
+            $sitemapName = 'sitemap-categories-' . $counter++ . '.xml';
 
             Sitemap::create()
                 ->add($categories)
@@ -94,7 +94,7 @@ class SitemapService
 
         Brand::chunk('1000', function ($brands) use (&$counter) {
             $outputDir = public_path('sitemaps');
-            $sitemapName = 'sitemap_brands_' . $counter++ . '.xml';
+            $sitemapName = 'sitemap-brands-' . $counter++ . '.xml';
 
             Sitemap::create()
                 ->add($brands)
@@ -111,7 +111,7 @@ class SitemapService
 
         Page::chunk('1000', function ($pages) use (&$counter) {
             $outputDir = public_path('sitemaps');
-            $sitemapName = 'sitemap_pages_' . $counter++ . '.xml';
+            $sitemapName = 'sitemap-pages-' . $counter++ . '.xml';
 
             Sitemap::create()
                 ->add($pages)
@@ -128,7 +128,7 @@ class SitemapService
 
         BlogPost::chunk('1000', function ($blogPosts) use (&$counter) {
             $outputDir = public_path('sitemaps');
-            $sitemapName = 'sitemap_blog_posts_' . $counter++ . '.xml';
+            $sitemapName = 'sitemap-blog-posts-' . $counter++ . '.xml';
 
             Sitemap::create()
                 ->add($blogPosts)
@@ -145,7 +145,7 @@ class SitemapService
 
         BlogCategory::chunk('1000', function ($blogCategories) use (&$counter) {
             $outputDir = public_path('sitemaps');
-            $sitemapName = 'sitemap_blog_categories_' . $counter++ . '.xml';
+            $sitemapName = 'sitemap_blog-categories-' . $counter++ . '.xml';
 
             Sitemap::create()
                 ->add($blogCategories)
@@ -159,14 +159,34 @@ class SitemapService
     private function updateRobotTxt()
     {
         $path = public_path('robots.txt');
-        $robotTxt = @file_get_contents($path);
 
-        if (strpos($robotTxt, 'Sitemap:')) {
-            $robotTxt = preg_replace('/.*Sitemap:.*\n/', 'Sitemap: ' . url('sitemap.xml') . "\n", $robotTxt);
+        // Check if file exists and is writable
+        if (!file_exists($path)) {
+            logger()->info("robots.txt doesn’t exist, creating new file");
+            $robotTxt = '';
+        } elseif (!is_writable($path)) {
+            logger()->error("robots.txt is not writable at $path");
+            return; // Exit if we can’t write
         } else {
-            $robotTxt .= "\n" . 'Sitemap: ' . url('sitemap.xml');
+            $robotTxt = file_get_contents($path);
         }
 
-        @file_put_contents($path, $robotTxt);
+        $sitemapUrl = 'Sitemap: ' . url('sitemap.xml');
+        logger()->info('Updating robots.txt with: ' . $sitemapUrl);
+
+        if (strpos($robotTxt, 'Sitemap:')) {
+            $robotTxt = preg_replace('/.*Sitemap:.*\n/', $sitemapUrl . "\n", $robotTxt);
+        } else {
+            $robotTxt .= "\n" . $sitemapUrl;
+        }
+
+        if (file_put_contents($path, $robotTxt) === false) {
+            logger()->error("Failed to write to robots.txt at $path");
+        } else {
+            logger()->info("Successfully updated robots.txt");
+        }
     }
+
+
+
 }

@@ -1,9 +1,14 @@
 <div
+{{--    x-data="HeaderSearch({--}}
+{{--        categories: {{ $categories }},--}}
+{{--        initialQuery: '{{ addslashes(request('query')) }}',--}}
+{{--               initialCategory: '{{ addslashes(request('category')) }}'--}}
+{{--    })"--}}
     x-data="HeaderSearch({
-        categories: {{ $categories }},
-        initialQuery: '{{ addslashes(request('query')) }}',
-       {{--        initialCategory: '{{ addslashes(request('category')) }}'--}}
-    })"
+    categories: {{ $categories }},
+    initialQuery: '{{ addslashes(request('query')) }}',
+    initialCategory: ''  // Always empty to ensure all category products are searched
+})"
     class="header-search-wrap-parent"
 >
     <div
@@ -126,6 +131,7 @@
 
                         <button
                             type="submit"
+                            aria-label="Search Product"
                             class="btn btn-primary btn-search"
                         >
                             <svg
@@ -225,7 +231,7 @@
                     @keydown.up="prevSuggestion"
                 />
 
-                <button type="submit" class="btn btn-search">
+                <button type="submit" class="btn btn-search" aria-label="Search">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"

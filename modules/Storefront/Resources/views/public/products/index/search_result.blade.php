@@ -10,7 +10,7 @@
             </template>
 
             <template x-if="!queryParams.query && queryParams.brand">
-                <p x-text="initialBrandName"></p>
+                <h1 x-text="initialBrandName"></h1>
             </template>
 
             <template x-if="!queryParams.query && !queryParams.brand && queryParams.category">

@@ -24,16 +24,23 @@ class BrandProductController
     public function index($slug, Product $model, ProductFilter $productFilter)
     {
         request()->merge(['brand' => $slug]);
-
         if (request()->expectsJson()) {
             return $this->searchProducts($model, $productFilter);
         }
 
-        $brand = Brand::findBySlug($slug);
+        $brand = Brand::with('metaData')->where('slug', $slug)->first();
+        if (!$brand) {
+            abort(404, 'Brand not found');
+        }
+
+        // Optional debug: Uncomment to verify
+        // dd($brand->toArray(), $brand->metaData->toArray());
 
         return view('storefront::public.products.index', [
+            'brand' => $brand,
             'brandName' => $brand->name,
             'brandBanner' => $brand->banner->path,
         ]);
     }
+
 }

@@ -26,7 +26,7 @@ class HomeController
         $home_page_composer = new HomePageComposer();
         return $home_page_composer->sections();
     }
-	
+
 	 public function getMobileSections()
     {
         $home_page_composer = new HomePageComposer();

@@ -11,3 +11,12 @@ Route::post('products/{productId}/reviews', 'ProductReviewController@store')
 Route::get('reviews/products', 'ReviewProductController@index')
     ->name('reviews.products.index')
     ->middleware('auth');
+
+
+
+
+Route::prefix('api/v1')->middleware('api.auth')->group(function () {
+    Route::post('products/reviews/{productId}', 'ProductReviewController@apiStore');
+
+});
+

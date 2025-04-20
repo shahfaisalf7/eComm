@@ -4,6 +4,11 @@
     <meta name="description" content="Buy a wide range of premium skin care, baby care, hair care, and beauty care products in Bangladesh. Shop original Japanese, Korean, USA & UK skin care products at Flora Mom.">
 @endpush
 @section('content')
+    <!-- Preload the first slider image only on homepage if slider exists -->
+    @if (!is_null($slider) && $slider->slides->isNotEmpty())
+        <link rel="preload" href="{{ $slider->slides->first()->file->path }}" as="image">
+    @endif
+
     @includeUnless(is_null($slider), 'storefront::public.home.sections.hero')
 
     @if (setting('storefront_features_section_enabled'))

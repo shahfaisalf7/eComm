@@ -8,7 +8,7 @@
             </button>
             <div class="modal-body p-5">
                 <div class="text-center d-flex justify-content-center">
-                    <img src="{{ asset('Floramom/images/register_icon.png') }}" alt="avatar"
+                    <img src="{{ asset('Floramom/images/register_icon.webp') }}" alt="avatar"
                         class="rounded-circle position-absolute top-0 start-50 translate-middle"
                         style="height: 120px !important" />
                 </div>
@@ -57,10 +57,10 @@
                                         data-loading="">{{ __('Sign Up') }}</button>
                                 </div>
                                 <span>{{ __('Already have an account?') }}
-                                    <a type="button" title="Sign In" class="pr-color" data-bs-toggle="modal"
+                                    <p type="button" title="Sign In" class="pr-color" data-bs-toggle="modal"
                                         data-bs-target="#static_login_modal">
                                         Sign In</i>
-                                    </a>
+                                    </p>
                                 </span>
                             </div>
                         </form>

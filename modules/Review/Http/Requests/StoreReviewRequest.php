@@ -14,7 +14,6 @@ class StoreReviewRequest extends Request
      */
     protected $availableAttributes = 'review::attributes';
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,14 +21,19 @@ class StoreReviewRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'rating' => 'required|numeric',
             'reviewer_name' => 'required',
             'comment' => 'required',
-            'g-recaptcha-response' => ['bail', 'sometimes', 'required', new GoogleRecaptcha()],
         ];
-    }
 
+        // Apply reCAPTCHA only for non-API requests
+        if (!$this->is('api/*')) {
+            $rules['g-recaptcha-response'] = ['bail', 'sometimes', 'required', new GoogleRecaptcha()];
+        }
+
+        return $rules;
+    }
 
     /**
      * Get custom messages for validator errors.

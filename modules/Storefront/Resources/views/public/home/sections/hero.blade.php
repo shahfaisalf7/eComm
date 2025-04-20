@@ -13,9 +13,9 @@
                     >
                         <div class="swiper-wrapper">
                             @foreach ($slider->slides as $slide)
-                                <a href="{{ $slide->call_to_action_url }}" class="swiper-slide">
+                                <a href="{{ $slide->call_to_action_url }}" class="swiper-slide" aria-label="Slider Image">
                                     <div
-                                        class="slider-bg-image"
+                                        class="slider-bg-image" alt="Slider Image"
                                         data-swiper-parallax-x="50%"
                                         style="background-image: url({{ $slide->file->path }})"
                                     >
@@ -42,8 +42,8 @@
                                 </a>
                             @endforeach
                         </div>
-                        
-                        @if ($slider->dots) 
+
+                        @if ($slider->dots)
                             <div class="swiper-pagination"></div>
                         @endif
 

@@ -11,4 +11,5 @@ return [
     'added_successfully' => 'Added Successfully',
     'removed_successfully' => 'Removed Successfully',
     'coupon_cannot_be_applied_to_offer_price_products' => 'Coupon cannot be applied to offer price products.', // Add this
+    'added_successfully_partial' => 'Added successfully, applied only to non-offer price products',
 ];

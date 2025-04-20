@@ -110,7 +110,7 @@
 
 @media screen and (max-width: 991px) {
     .top-nav-wrap {
-        display: none;
+        //display: none;
     }
 
     .top-nav {
@@ -120,9 +120,13 @@
 
         .top-nav-left {
             margin-bottom: 10px;
-            text-align: center;
+           // text-align: center;
+            font-size: 75%;
         }
-
+        .top-nav-right
+        {
+            font-size: 75%;
+        }
         .top-nav-right-list {
             .top-nav-account {
                 display: none;

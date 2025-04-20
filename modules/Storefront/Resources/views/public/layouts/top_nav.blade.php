@@ -2,24 +2,24 @@
     <div class="container">
         <div class="top-nav">
             <div class="d-flex justify-content-between">
-                <div class="top-nav-left d-none d-lg-block">
+                <div class="top-nav-left  d-lg-block">
                     <span>{!! setting('storefront_welcome_text') !!}</span>
                 </div>
 
 
                 @if (setting('storefront_discount_text'))
-                    <div class="top-nav-left d-none d-lg-block">
+                    <div class="top-nav-left  d-lg-block">
                         <span>{!! setting('storefront_discount_text') !!}</span>
                     </div>
                 @endif
 
 
-                <div class="top-nav-right d-none d-lg-block">
+                <div class="top-nav-right  d-lg-block " style="text-align: right">
                     <a href="/membership-facilities" target="_blank" rel="noopener noreferrer"><span style="font-weight: 700"> <span class="pr-color">Floramom</span> <span style="color: black">Membership</span> </span></a>
 
                 </div>
 
-                <div class="top-nav-right">
+                <div class="top-nav-right d-none d-lg-block">
                     <ul class="list-inline top-nav-right-list">
                         <li>
                             <a href="{{ route('contact.create') }}">

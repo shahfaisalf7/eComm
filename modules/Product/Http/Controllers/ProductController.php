@@ -49,7 +49,7 @@ class ProductController extends Controller
 
     public function apiIndex(Product $model, ProductFilter $productFilter)
     {
-        $final_data = $this->searchProducts($model, $productFilter);
+        $final_data = $this->searchProductsMobile($model, $productFilter);
         return response()->json([
             'status' => 'success',
             'message' => trans('Products data.'),
@@ -89,6 +89,7 @@ class ProductController extends Controller
         event(new ProductViewed($product));
         if (isAPI()) {
             $final_data = ['product' => $product->toArray(), 'relatedProducts' => $relatedProducts->toArray(), 'upSellProducts' => $upSellProducts->toArray(), 'review' => $review->toArray()];
+            //print_r($product->toArray());
             return response()->json([
                 'status' => 'success',
                 'message' => trans('Product details.'),

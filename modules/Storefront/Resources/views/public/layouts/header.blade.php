@@ -48,17 +48,65 @@
 
                     <div class="header-column-right-item header-localization">
                         @auth
-                            <a title="Dashboard" class="sm-login-icon" href="{{ route('account.dashboard.index') }}">
-                                <i class="las la-user"></i>
+{{--                            <a title="Dashboard" class="sm-login-icon" href="{{ route('account.dashboard.index') }}">--}}
+{{--                                <i class="las la-user"></i>--}}
+{{--                            </a>--}}
+                            <a href="{{ route('compare.index') }}" class="header-column-right-item "
+                               data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Compare" style="margin-right: 20px">
+                                <div class="icon-wrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none">
+                                        <path
+                                            d="M3.58008 5.15991H17.4201C19.0801 5.15991 20.4201 6.49991 20.4201 8.15991V11.4799"
+                                            stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M6.74008 2L3.58008 5.15997L6.74008 8.32001" stroke="#292D32" stroke-width="1.5"
+                                              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M20.4201 18.84H6.58008C4.92008 18.84 3.58008 17.5 3.58008 15.84V12.52"
+                                              stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                              stroke-linejoin="round" />
+                                        <path d="M17.26 21.9999L20.42 18.84L17.26 15.6799" stroke="#292D32" stroke-width="1.5"
+                                              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
+                                    <div class="count" style="background-color: #e33b80 !important;"
+                                         x-text="$store.state.compareCount">{{ count($compareList) }}</div>
+                                </div>
                             </a>
+
+{{--                            <a href="{{ route('cart.index') }}" class="header-column-right-item"--}}
+{{--                               data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"--}}
+{{--                               data-bs-title="Cart" @click="$store.layout.openSidebarCart($event)">--}}
+{{--                                <div class="icon-wrap">--}}
+{{--                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"--}}
+{{--                                         viewBox="0 0 16 16" fill="none">--}}
+{{--                                        <g clip-path="url(#clip0_2055_61)">--}}
+{{--                                            <path--}}
+{{--                                                d="M1.3335 1.33325H2.20427C2.36828 1.33325 2.45029 1.33325 2.51628 1.36341C2.57444 1.38999 2.62373 1.43274 2.65826 1.48655C2.69745 1.54761 2.70905 1.6288 2.73225 1.79116L3.04778 3.99992M3.04778 3.99992L3.74904 9.15419C3.83803 9.80827 3.88253 10.1353 4.0389 10.3815C4.17668 10.5984 4.37422 10.7709 4.60773 10.8782C4.87274 10.9999 5.20279 10.9999 5.8629 10.9999H11.5682C12.1965 10.9999 12.5107 10.9999 12.7675 10.8869C12.9939 10.7872 13.1881 10.6265 13.3283 10.4227C13.4875 10.1917 13.5462 9.88303 13.6638 9.26576L14.5462 4.63305C14.5876 4.41579 14.6083 4.30716 14.5783 4.22225C14.552 4.14777 14.5001 4.08504 14.4319 4.04526C14.3541 3.99992 14.2435 3.99992 14.0223 3.99992H3.04778ZM6.66683 13.9999C6.66683 14.3681 6.36835 14.6666 6.00016 14.6666C5.63197 14.6666 5.3335 14.3681 5.3335 13.9999C5.3335 13.6317 5.63197 13.3333 6.00016 13.3333C6.36835 13.3333 6.66683 13.6317 6.66683 13.9999ZM12.0002 13.9999C12.0002 14.3681 11.7017 14.6666 11.3335 14.6666C10.9653 14.6666 10.6668 14.3681 10.6668 13.9999C10.6668 13.6317 10.9653 13.3333 11.3335 13.3333C11.7017 13.3333 12.0002 13.6317 12.0002 13.9999Z"--}}
+{{--                                                stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>--}}
+{{--                                        </g>--}}
+{{--                                        <defs>--}}
+{{--                                            <clipPath id="clip0_2055_61">--}}
+{{--                                                <rect width="16" height="16" fill="white"></rect>--}}
+{{--                                            </clipPath>--}}
+{{--                                        </defs>--}}
+{{--                                    </svg>--}}
+
+{{--                                    <div class="count" style="background-color: #e33b80 !important;"--}}
+{{--                                         x-text="$store.state.cartQuantity">--}}
+{{--                                        {{ $cart->toArray()['quantity'] }}--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </a>--}}
                         @else
                             {{-- <a title="Sign Up/In" class="sm-login-icon"  href="{{ route('login') }}" >
                                 <i class="las la-user-circle la-2x pr-color" ></i>
                             </a> --}}
-                            <a type="button" title="Sign Up/In" class="sm-login-icon" data-bs-toggle="modal"
+                            <p type="button" title="Sign Up/In" class="sm-login-icon" data-bs-toggle="modal"
                                 data-bs-target="#static_login_modal">
                                 <i class="las la-user-circle la-2x pr-color"></i>
-                            </a>
+                            </p>
                         @endauth
                     </div>
 
@@ -95,14 +143,14 @@
                             <a href="{{ route('login') }}" style="text-align: center; display: inline-block;">
                                 {!! trans('storefront::layouts.login_register_modify') !!}
                             </a> --}}
-                                <a type="button" style="text-align: center; display: inline-block;" data-bs-toggle="modal"
+                                <p type="button" style="text-align: center; display: inline-block;" data-bs-toggle="modal"
                                     data-bs-target="#static_login_modal">
                                     <i class="las la-user-circle la-2x pr-color"></i>
-                                </a>
-                                <a type="button" style="text-align: center; display: inline-block;" data-bs-toggle="modal"
+                                </p>
+                                <p type="button" style="text-align: center; display: inline-block;" data-bs-toggle="modal"
                                     data-bs-target="#static_login_modal">
                                     {!! trans('storefront::layouts.login_register_modify') !!}
-                                </a>
+                                </p>
                             </div>
 
 
@@ -179,6 +227,7 @@
         </div>
     </div>
 </header>
+{{--@include('storefront::public.layouts.header.header_search')--}}
 <style>
     .special-price {
         color: #d63384 !important;
@@ -210,8 +259,8 @@
     }
     .custom-page-content
     {
-        padding-left: 15%;
-        padding-right: 15%;
+        padding-left: 12%;
+        padding-right: 12%;
         text-align: justify;
     }
     .tab-content .custom-page-content

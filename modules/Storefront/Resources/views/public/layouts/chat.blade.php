@@ -163,7 +163,7 @@
 
 
   <div id="chatIconContainer">
-    <button class="chat-button">
+    <button class="chat-button" aria-label="Open Chat Button">
       <div class="ripple"></div>
       <div class="ripple"></div>
       <div class="ripple"></div>

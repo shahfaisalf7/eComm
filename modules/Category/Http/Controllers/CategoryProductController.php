@@ -37,10 +37,16 @@ class CategoryProductController
 
     public function apiIndex(Category $category, Product $model, ProductFilter $productFilter)
     {
+        \Log::info('Expects JSON: ' . (request()->expectsJson() ? 'true' : 'false'));
+        \Log::info('Accept Header: ' . request()->header('Accept'));
         request()->merge(['category' => $category->slug]);
         if (request()->expectsJson()) {
-            return $this->searchProducts($model, $productFilter);
+            return $this->searchProductsMobile($model, $productFilter);
         }
+//        request()->merge(['category' => $category->slug]);
+//        if (request()->expectsJson()) {
+//            return $this->searchProducts($model, $productFilter);
+//        }
 
         $category = $category->load('metaData');
         $final_data = [
@@ -55,4 +61,21 @@ class CategoryProductController
             'data' => $final_data
         ]);
     }
+//    public function apiIndex($slug, Product $model, ProductFilter $productFilter)
+//    {
+//
+//        request()->merge(['category' => $slug]);
+//        if (request()->expectsJson()) {
+//            return $this->searchProducts($model, $productFilter);
+//        }
+//
+//        $category = Category::findBySlug($slug);
+//        $final_data = ['categoryName' => $category->name, 'categoryBanner' => $category->banner->path];
+//        return response()->json([
+//            'status' => 'success',
+//            'message' => trans('Categories products.'),
+//            'data' => $final_data
+//        ]);
+//    }
+
 }

@@ -17,6 +17,7 @@ use Spatie\Sitemap\Contracts\Sitemapable;
 use Modules\Support\Eloquent\Translatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Meta\Entities\MetaData;
 
 class Brand extends Model implements Sitemapable
 {
@@ -46,6 +47,11 @@ class Brand extends Model implements Sitemapable
      *
      * @var array
      */
+    public function metaData()
+    {
+        return $this->morphMany(MetaData::class, 'entity');
+    }
+
     protected $casts = [
         'is_active' => 'boolean',
     ];
@@ -156,4 +162,6 @@ class Brand extends Model implements Sitemapable
             ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
             ->setPriority(0.1);
     }
+
+
 }

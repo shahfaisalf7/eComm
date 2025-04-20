@@ -14,7 +14,7 @@
                     @endforeach
                 </ul>
 
-                <hr>
+
             </div>
 
             <div class="tab-content">

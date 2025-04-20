@@ -3,20 +3,32 @@
 @endphp
 
 @extends('storefront::public.layout')
-
 @section('title')
     @if (request()->has('query'))
         {{ trans('storefront::products.search_results_for') }}: "{{ request('query') }}"
-    @elseif (request()->has('category') && $category->metaData->isNotEmpty())
+    @elseif (!empty($category) && !is_null($category->metaData) && $category->metaData->isNotEmpty())
         {{ $category->metaData->first()->meta_title ?? $categoryName }}
+    @elseif (!empty($brand) && !is_null($brand->metaData) && $brand->metaData->isNotEmpty())
+        {{ $brand->metaData->first()->meta_title ?? $brandName }}
     @else
-        {{ $categoryName ?? trans('storefront::products.shop') }}
+        {{ $categoryName ?? $brandName ?? trans('storefront::products.title') }}
     @endif
 @endsection
+{{--@section('title')--}}
+{{--    @if (request()->has('query'))--}}
+{{--        {{ trans('storefront::products.search_results_for') }}: "{{ request('query') }}"--}}
+{{--    @elseif (!empty($category) && $category->metaData->isNotEmpty())--}}
+{{--        {{ $category->metaData->first()->meta_title ?? $categoryName }}--}}
+{{--    @else--}}
+{{--        {{ $categoryName ?? trans('storefront::products.title') }}--}}
+{{--    @endif--}}
+{{--@endsection--}}
 
 @push('meta')
-    @if (request()->has('category') && $category->metaData->isNotEmpty())
+    @if (!empty($category) && !is_null($category->metaData) && $category->metaData->isNotEmpty())
         <meta name="description" content="{{ $category->metaData->first()->meta_description ?? '' }}">
+    @elseif (!empty($brand) && !is_null($brand->metaData) && $brand->metaData->isNotEmpty())
+        <meta name="description" content="{{ $brand->metaData->first()->meta_description ?? '' }}">
     @endif
 @endpush
 
@@ -59,7 +71,7 @@
                 </div>
 
                 <div class="product-search-right">
-                    @if ($categoryBanner)
+                    @if (!empty($category) && !empty($categoryBanner))
                         <div class="d-none d-lg-block categories-banner">
                             <img src="{{ $categoryBanner }}" alt="Category banner">
                         </div>
@@ -67,9 +79,8 @@
 
                     @include('storefront::public.products.index.search_result')
 
-                    @if ($category->description)
+                    @if (!empty($category) && !empty($category->description))
                         @php
-                            // Count words in the description (strip HTML to avoid counting tags)
                             $descriptionWordCount = str_word_count(strip_tags($category->description));
                             $showToggle = $descriptionWordCount > 100;
                         @endphp
@@ -87,6 +98,25 @@
             </div>
         </div>
     </section>
+    <style>
+        .category-description {
+            position: relative;
+        }
+
+        .description-content {
+            transition: max-height 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition with cubic-bezier */
+            overflow: hidden;
+        }
+
+        .description-collapsed {
+            max-height: 200px; /* Adjust this value to control the initial visible height */
+        }
+
+        .description-expanded {
+            max-height: auto; /* Large enough to fit most content; adjust if needed */
+        }
+
+    </style>
 @endsection
 
 @push('globals')
@@ -119,38 +149,4 @@
     ])
 @endpush
 
-<style>
-    .category-description {
-        position: relative;
-    }
 
-    .description-content {
-        transition: max-height 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition with cubic-bezier */
-        overflow: hidden;
-    }
-
-    .description-collapsed {
-        max-height: 200px; /* Adjust this value to control the initial visible height */
-    }
-
-    .description-expanded {
-        max-height: auto; /* Large enough to fit most content; adjust if needed */
-    }
-
-    .show-more-btn,
-    .show-less-btn {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        margin-top: 10px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .show-more-btn:hover,
-    .show-less-btn:hover {
-        background-color: #0056b3;
-    }
-</style>

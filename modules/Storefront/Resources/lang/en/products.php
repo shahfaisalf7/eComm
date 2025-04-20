@@ -26,4 +26,5 @@ return [
     ],
     'no_product_found' => 'Oops! No product found.',
     'showing_results' => 'Showing :from-:to of :total results',
+    'title'=> 'Flora mom - Buy Authentic Skin Care Products in Bangladesh'
 ];

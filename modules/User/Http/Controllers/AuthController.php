@@ -20,66 +20,34 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends BaseAuthController
 {
-    /**
-     * Show login form.
-     *
-     * @return Response
-     */
     public function getLogin()
     {
-        // return view('storefront::public.auth.login', [
-        //     'providers' => LoginProvider::enabled(),
-        // ]);
         return redirect('/');
     }
 
-
-    /**
-     * Redirect the user to the given provider authentication page.
-     *
-     * @param string $provider
-     *
-     * @return Response
-     */
     public function redirectToProvider($provider)
     {
         if (!LoginProvider::isEnable($provider)) {
             abort(404);
         }
-
         return Socialite::driver($provider)->redirect();
     }
 
-
-    /**
-     * Obtain the user information from the given provider.
-     *
-     * @param string $provider
-     *
-     * @return Response
-     */
     public function handleProviderCallback($provider)
     {
         if (!LoginProvider::isEnable($provider)) {
             abort(404);
         }
-
         try {
             $user = Socialite::driver($provider)->user();
         } catch (Exception $e) {
             return redirect()->route('login')->with('error', $e->getMessage());
         }
-
         if (User::registered($user->getEmail())) {
-            auth()->login(
-                User::findByEmail($user->getEmail())
-            );
-
+            auth()->login(User::findByEmail($user->getEmail()));
             return redirect($this->redirectTo());
         }
-
         [$firstName, $lastName] = $this->extractName($user->getName());
-
         $registeredUser = $this->auth->registerAndActivate([
             'first_name' => $firstName,
             'last_name' => $lastName,
@@ -87,105 +55,53 @@ class AuthController extends BaseAuthController
             'phone' => '',
             'password' => str_random(),
         ]);
-
         $this->assignCustomerRole($registeredUser);
-
         auth()->login($registeredUser);
-
         return redirect($this->redirectTo());
     }
 
-
-    /**
-     * Show registrations form.
-     *
-     * @return Response
-     */
     public function getRegister()
     {
-        // return view('storefront::public.auth.register', [
-        //     'privacyPageUrl' => $this->getPrivacyPageUrl(),
-        //     'providers' => LoginProvider::enabled(),
-        // ]);
         return redirect('/');
     }
 
-
-    /**
-     * Show reset password form.
-     *
-     * @return Response
-     */
     public function getReset()
     {
         return view('storefront::public.auth.reset.begin');
     }
 
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @return string
-     */
     protected function redirectTo()
     {
         return route('account.dashboard.index');
     }
 
-
-    /**
-     * The login URL.
-     *
-     * @return string
-     */
     protected function loginUrl()
     {
         return route('login');
     }
 
-
-    /**
-     * Reset complete form route.
-     *
-     * @param User $user
-     * @param string $code
-     *
-     * @return string
-     */
     protected function resetCompleteRoute($user, $code)
     {
         return route('reset.complete', [$user->email, $code]);
     }
 
-
-    /**
-     * Password reset complete view.
-     *
-     * @return string
-     */
     protected function resetCompleteView()
     {
         return view('storefront::public.auth.reset.complete');
     }
-
 
     private function extractName($name)
     {
         return explode(' ', $name, 2);
     }
 
-
-    /**
-     * Get privacy page url.
-     *
-     * @return string
-     */
     private function getPrivacyPageUrl()
     {
         return Cache::tags('settings')->rememberForever('privacy_page_url', function () {
             return Page::urlForPage(setting('storefront_privacy_page'));
         });
     }
+
     public function requestOtp(Request $request)
     {
         $request->validate([
@@ -219,10 +135,9 @@ class AuthController extends BaseAuthController
 
         UserActivationCode::updateOrCreate(['phone' => $phone], $user_activation_data);
 
-        ### sms ###
-        $API_TOKEN =  config('sms.API_TOKEN');
-        $SID =  config('sms.SID');
-        $url =  config('sms.SMS_URL');
+        $API_TOKEN = config('sms.API_TOKEN');
+        $SID = config('sms.SID');
+        $url = config('sms.SMS_URL');
 
         $otp_content_from_config = config('sms.LOGIN_SIGNUP_OTP_CONTENT');
         $otp_content = str_replace('{otp}', $otp, $otp_content_from_config);
@@ -230,7 +145,7 @@ class AuthController extends BaseAuthController
         $params = [
             "api_token" => $API_TOKEN,
             "sid" => $SID,
-            "msisdn" =>  '88' . $phone,
+            "msisdn" => '88' . $phone,
             "sms" => $otp_content,
             "csms_id" => 'SETCOL' . date('Ymd'),
         ];
@@ -277,11 +192,8 @@ class AuthController extends BaseAuthController
                     'password' => $phone,
                 ];
                 $user = $this->auth->registerAndActivate($data);
-
                 $this->assignCustomerRole($user);
-
                 event(new CustomerRegistered($user));
-
                 $otpRecord->update(['user_id' => $user->id]);
                 Auth::login($user);
                 if (isAPI()) {
@@ -380,6 +292,8 @@ class AuthController extends BaseAuthController
                 return responseWithError(__("Invalid input format!"));
             }
 
+            $oldSessionId = session()->getId();
+
             if (isAPI()) {
                 $credentials = [$column => $email_phone, 'password' => $request->password];
                 if ($column == 'phone') {
@@ -422,6 +336,7 @@ class AuthController extends BaseAuthController
                 $user = User::where('phone', $phone)->first();
                 if ($user && Hash::check($request->password, $user->password)) {
                     Auth::login($user);
+                    $this->mergeGuestCart($user, $oldSessionId);
                     return response()->json(['status' => 'success', 'message' => 'Login successfully.'], 200);
                 }
                 return response()->json(['status' => 'error', 'message' => __("Invalid phone number or password")]);
@@ -433,10 +348,31 @@ class AuthController extends BaseAuthController
                 if (!$loggedIn) {
                     return response()->json(['status' => 'error', 'message' => trans('user::messages.users.invalid_credentials')]);
                 }
+                $this->mergeGuestCart(auth()->user(), $oldSessionId);
                 return response()->json(['status' => 'success', 'message' => 'Login successfully.'], 200);
             }
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    private function mergeGuestCart($user, $sessionId)
+    {
+        $userId = (string) $user->id;
+        $guestCartId = $sessionId . '_cart_items';
+
+        \Log::info("Merging guest cart", ['session_id' => $sessionId, 'guest_cart_id' => $guestCartId, 'user_id' => $userId]);
+        $guestCart = \Modules\Cart\Entities\Cart::find($guestCartId);
+        if ($guestCart) {
+            \Log::info("Guest cart found", ['data' => $guestCart->data]);
+            \Modules\Cart\Entities\Cart::updateOrCreate(
+                ['id' => $userId . '_cart_items'],
+                ['data' => $guestCart->data, 'updated_at' => now()]
+            );
+            $guestCart->delete();
+            \Log::info("Guest cart merged and deleted");
+        } else {
+            \Log::warning("No guest cart found for session", ['guest_cart_id' => $guestCartId]);
         }
     }
 }

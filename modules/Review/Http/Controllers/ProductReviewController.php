@@ -46,4 +46,36 @@ class ProductReviewController
                 'is_approved' => setting('auto_approve_reviews', 0),
             ]);
     }
+
+    /**
+     * Store a newly created resource in storage for API.
+     *
+     * @param int $productId
+     * @param StoreReviewRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function apiStore($productId, StoreReviewRequest $request): \Illuminate\Http\JsonResponse
+    {
+        if (!setting('reviews_enabled')) {
+            return response()->json(['message' => 'Reviews are disabled.'], 403);
+        }
+
+        $review = Product::findOrFail($productId)
+            ->reviews()
+            ->create([
+                'reviewer_id' => auth()->id(),
+                'rating' => $request->rating,
+                'reviewer_name' => $request->reviewer_name,
+                'comment' => $request->comment,
+                'is_approved' => setting('auto_approve_reviews', 0),
+            ]);
+
+        return response()->json([
+            'message' => 'Review created successfully.',
+            //'data' => new ReviewResource($review),
+        ], 201);
+    }
+
+
 }
